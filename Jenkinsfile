@@ -6,11 +6,7 @@ pipeline{
   stages{
     stage('terraform init'){
       steps{
-        def build = currentBuild.rawBuild
-        def cause = build.getCause(hudson.model.Cause.UserIdCause.class)
-        def name = cause.getUserName()
-        sh "echo ${name}"
-        createS3Bucket("terraform-backend-ondmd-${name}")
+        createS3Bucket("terraform-backend-ondmd")
       }
     }
     stage('Provision Ansible and K8s Management Servers'){
