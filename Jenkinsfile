@@ -1,9 +1,12 @@
 pipeline{
   agent any
+  environment {
+   PATH = "${PATH}:${getTerraformPath()}"
+}
   stages{
     stage('terraform init'){
       steps{
-        sh "echo Hello - 1!!"
+        sh "terraform init"
       }
     }
     stage('Provision Ansible and K8s Management Servers'){
@@ -36,11 +39,17 @@ pipeline{
         sh "echo Hello - 7!!"
       }
     }
-    stage('Destroy Terrform Resources'){
+    stage('Destroy Terraform Resources'){
       steps{
         sh "echo Hello - 8!!"
       }
     }
   }
 
+}
+
+
+def getTerraformPath(){
+  def tfHome = tool name: 'Terraform-0.12', type: 'terraform'
+  return tfHome
 }
