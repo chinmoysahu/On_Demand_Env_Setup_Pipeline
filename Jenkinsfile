@@ -6,7 +6,10 @@ pipeline{
   stages{
     stage('terraform init'){
       steps{
-        createS3Bucket("terraform-backend-ondmd")
+        wrap([$class: 'BuildUser']) {
+            sh "bucketName=terraform-backend-ondmd-${BUILD_USER}"
+            sh  "echo BucketName = $bucketName"
+        }
       }
     }
     stage('Provision Ansible and K8s Management Servers'){
@@ -53,8 +56,4 @@ pipeline{
 def getTerraformPath(){
   def tfHome = tool name: 'Terraform-0.12', type: 'terraform'
   return tfHome
-}
-
-def createS3Bucket(bucketName){
-  sh returnStatus: true, script:"aws s3 mb ${bucketName} --region=us-east-1"
 }
