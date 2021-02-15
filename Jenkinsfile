@@ -15,10 +15,8 @@ pipeline{
   stages{
     stage('terraform init'){
       steps{
-        wrap([$class: 'BuildUser']) {
-            sh "bucketName=terraform-backend-ondmd-${BUILD_USER}"
-            sh  "echo BucketName = $bucketName"
-        }
+        sh "terraform init"
+        sh "terraform apply -auto-approve"
       }
     }
     stage('Provision Ansible and K8s Management Servers'){
