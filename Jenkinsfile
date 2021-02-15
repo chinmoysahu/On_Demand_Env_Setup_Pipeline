@@ -6,7 +6,6 @@ pipeline{
   stages{
     stage('terraform init'){
       steps{
-        sh "terraform init"
         sh "echo ${BUILD_USER}"
         createS3Bucket("terraform-backend-ondmd-${BUILD_USER}")
       }
@@ -14,6 +13,7 @@ pipeline{
     stage('Provision Ansible and K8s Management Servers'){
       steps{
         sh "echo Hello - 2!!"
+        sh "terraform init"
       }
     }
     stage('Create K8s Cluster'){
