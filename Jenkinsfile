@@ -1,3 +1,12 @@
+import hudson.EnvVars
+import hudson.model.*
+import hudson.maven.*
+import hudson.tasks.*
+import jenkins.model.Jenkins
+import java.net.URL
+import jenkins.model.*
+
+
 pipeline{
   agent any
   environment {
