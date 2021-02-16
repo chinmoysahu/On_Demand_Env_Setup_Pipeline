@@ -13,10 +13,12 @@ pipeline{
    PATH = "${PATH}:${getTerraformPath()}"
 }
   stages{
-    stage('terraform init'){
+    stage('terraform initialization and Backend Bucket Creation'){
       steps{
         sh "terraform init"
-        sh "terraform apply -auto-approve"
+        git url: 'https://github.com/chinmoysahu/On_Demand_Env_Setup_Pipeline/blob/master/Base-Backend-Bucket'
+
+
       }
     }
     stage('Provision Ansible and K8s Management Servers'){
@@ -63,4 +65,8 @@ pipeline{
 def getTerraformPath(){
   def tfHome = tool name: 'Terraform-0.12', type: 'terraform'
   return tfHome
+}
+
+def DownloadscriptfromSCMtoPath(string path){
+
 }
