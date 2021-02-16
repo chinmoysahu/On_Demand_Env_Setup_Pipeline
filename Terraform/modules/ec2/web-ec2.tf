@@ -9,7 +9,7 @@ resource "aws_instance" "web" {
   count                  = var.web_ec2_count
   ami                    = var.web_amis[var.region_val]
   instance_type          = var.web_instance_type
-  subnet_id              = local.pub_sub_ids[count.index]
+  subnet_id              = local.pub_sub_ids[count.index] ######Fix this local var-------------------------->
   tags                   = local.web_tags
   user_data              = file("scripts/apache.sh") #create a K8s cluster
   iam_instance_profile   = aws_iam_instance_profile.s3_ec2_profile.name
